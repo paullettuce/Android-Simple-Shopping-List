@@ -34,4 +34,13 @@ interface ShoppingListsDao {
             ORDER BY creationTimestamp DESC"""
     )
     fun getShoppingListWithItemsDetails(id: Long): LiveData<ShoppingListDetailsWithItems>
+
+    @Query(
+        """
+            UPDATE shopping_list_entity 
+            SET isActive = 0 
+            WHERE id=:id
+        """
+    )
+    fun archiveList(id: Long): Completable
 }

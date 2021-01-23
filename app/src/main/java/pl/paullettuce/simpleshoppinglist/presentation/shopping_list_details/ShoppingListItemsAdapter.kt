@@ -39,7 +39,7 @@ class ShoppingListItemViewHolder(
         itemView.name.showStrikeThrough(item.isDone)
         itemView.subtitle.showStrikeThrough(item.isDone)
         itemView.doneIcon.setDoneNotDoneIcon(item.isDone)
-        if (item.isListArchived) {
+        if (!item.isListActive) {
             itemView.doneIcon.setOnClickListener(null)
         } else {
             itemView.doneIcon.setOnClickListener {

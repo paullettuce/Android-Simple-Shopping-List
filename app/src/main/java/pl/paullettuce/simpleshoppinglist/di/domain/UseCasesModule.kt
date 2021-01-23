@@ -7,10 +7,7 @@ import dagger.hilt.android.components.ApplicationComponent
 import pl.paullettuce.simpleshoppinglist.domain.repository.ShoppingListItemsRepository
 import pl.paullettuce.simpleshoppinglist.domain.repository.ShoppingListsRepository
 import pl.paullettuce.simpleshoppinglist.domain.usecase.details.*
-import pl.paullettuce.simpleshoppinglist.domain.usecase.shopping_lists.CreateShoppingListUseCase
-import pl.paullettuce.simpleshoppinglist.domain.usecase.shopping_lists.CreateShoppingListUseCaseImpl
-import pl.paullettuce.simpleshoppinglist.domain.usecase.shopping_lists.GetShoppingListsUseCase
-import pl.paullettuce.simpleshoppinglist.domain.usecase.shopping_lists.GetShoppingListsUseCaseImpl
+import pl.paullettuce.simpleshoppinglist.domain.usecase.shopping_lists.*
 
 @InstallIn(ApplicationComponent::class)
 @Module
@@ -49,4 +46,9 @@ object UseCasesModule {
     fun provideAddShoppingListItemUseCase(
         itemsRepository: ShoppingListItemsRepository
     ): AddShoppingListItemUseCase = AddShoppingListItemUseCaseImpl(itemsRepository)
+
+    @Provides
+    fun provideArchiveListUseCase(
+        repository: ShoppingListsRepository
+    ): ArchiveListUseCase = ArchiveListUseCaseImpl(repository)
 }

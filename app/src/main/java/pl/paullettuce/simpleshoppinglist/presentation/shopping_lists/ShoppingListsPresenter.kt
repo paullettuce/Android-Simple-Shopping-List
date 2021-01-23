@@ -7,12 +7,14 @@ import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import pl.paullettuce.simpleshoppinglist.domain.extensions.switchMap
 import pl.paullettuce.simpleshoppinglist.domain.model.ShoppingListDetails
+import pl.paullettuce.simpleshoppinglist.domain.usecase.shopping_lists.ArchiveListUseCase
 import pl.paullettuce.simpleshoppinglist.domain.usecase.shopping_lists.CreateShoppingListUseCase
 import pl.paullettuce.simpleshoppinglist.domain.usecase.shopping_lists.GetShoppingListsUseCase
 
 class ShoppingListsPresenter(
     private val getShoppingListsUseCase: GetShoppingListsUseCase,
-    private val createShoppingListUseCase: CreateShoppingListUseCase
+    private val createShoppingListUseCase: CreateShoppingListUseCase,
+    private val archiveListUseCase: ArchiveListUseCase
 ) : ShoppingListsContract.Presenter {
     override val shoppingLists: LiveData<List<ShoppingListDetails>>
         get() = _shouldFetchActiveLists.switchMap {
@@ -28,6 +30,12 @@ class ShoppingListsPresenter(
 
     override fun createShoppingList(name: String) {
         createShoppingListUseCase(name)
+            .subscribe()
+            .addTo(compositeDisposable)
+    }
+
+    override fun archiveList(listDetails: ShoppingListDetails) {
+        archiveListUseCase(listDetails.id)
             .subscribe()
             .addTo(compositeDisposable)
     }

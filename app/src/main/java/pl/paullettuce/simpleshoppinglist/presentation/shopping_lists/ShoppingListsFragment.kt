@@ -42,7 +42,7 @@ class ShoppingListsFragment : Fragment(R.layout.fragment_shopping_lists),
     }
 
     override fun archive(item: ShoppingListDetails) {
-        TODO("Not yet implemented")
+        presenter.archiveList(item)
     }
 
     override fun unarchive(item: ShoppingListDetails) {

@@ -11,7 +11,7 @@ data class ShoppingListItemEntity(
     val quantity: Int,
     val creationTimestamp: Long,
     val isDone: Boolean = false,
-    val isListArchived: Boolean = false
+    var isListActive: Boolean = true
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0

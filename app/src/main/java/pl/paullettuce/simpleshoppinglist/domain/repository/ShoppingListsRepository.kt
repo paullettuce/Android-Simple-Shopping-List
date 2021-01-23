@@ -9,4 +9,5 @@ interface ShoppingListsRepository {
     fun createShoppingList(name: String): Completable
     fun getShoppingLists(active: Boolean): LiveData<List<ShoppingListDetails>>
     fun getShoppingListWithItemsDetails(id: Long): LiveData<ShoppingListDetailsWithItems>
+    fun archiveList(id: Long): Completable
 }

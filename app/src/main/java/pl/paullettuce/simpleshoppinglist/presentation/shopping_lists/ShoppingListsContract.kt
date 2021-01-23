@@ -14,6 +14,7 @@ interface ShoppingListsContract {
 
         fun setFetchActiveLists(shouldFetchActive: Boolean)
         fun createShoppingList(name: String)
+        fun archiveList(listDetails: ShoppingListDetails)
     }
 
     interface ListInteraction {

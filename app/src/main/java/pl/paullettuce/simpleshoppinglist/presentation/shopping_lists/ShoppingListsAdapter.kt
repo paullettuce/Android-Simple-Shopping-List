@@ -36,5 +36,9 @@ class ShoppingListViewHolder(
         itemView.name.text = item.name
         itemView.subtitle.text = subtitle
         itemView.setOnClickListener { interaction.onClick(item) }
+        itemView.setOnLongClickListener {
+            interaction.archive(item)
+            true
+        }
     }
 }

@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import pl.paullettuce.simpleshoppinglist.domain.mapper.ShoppingListEntityToDetailsListMapper
+import pl.paullettuce.simpleshoppinglist.domain.mapper.ShoppingListItemsIsArchivedMapper
 import pl.paullettuce.simpleshoppinglist.domain.repository.ShoppingListItemsRepository
 import pl.paullettuce.simpleshoppinglist.domain.repository.ShoppingListsRepository
 import pl.paullettuce.simpleshoppinglist.storage.dao.ShoppingListItemsDao
@@ -21,9 +22,10 @@ object RepositoryModule {
     @Singleton
     fun provideShoppingListsRepository(
         shoppingListsDao: ShoppingListsDao,
-        mapper: ShoppingListEntityToDetailsListMapper
+        mapper: ShoppingListEntityToDetailsListMapper,
+        isArchivedMapper: ShoppingListItemsIsArchivedMapper
     ): ShoppingListsRepository {
-        return ShoppingListsRepositoryImpl(shoppingListsDao, mapper)
+        return ShoppingListsRepositoryImpl(shoppingListsDao, mapper, isArchivedMapper)
     }
 
     @Provides

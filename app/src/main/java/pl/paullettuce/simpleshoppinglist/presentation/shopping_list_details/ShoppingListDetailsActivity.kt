@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_list_details.*
 import pl.paullettuce.simpleshoppinglist.R
+import pl.paullettuce.simpleshoppinglist.presentation.extensions.showView
 import pl.paullettuce.simpleshoppinglist.presentation.lists.RecyclerViewMargin
 import pl.paullettuce.simpleshoppinglist.storage.entity.ShoppingListItemEntity
 import javax.inject.Inject
@@ -23,6 +24,8 @@ class ShoppingListDetailsActivity : AppCompatActivity(), ShoppingListDetailsCont
 
     @Inject
     lateinit var listItemsAdapter: ShoppingListItemsAdapter
+
+    private var shouldFABbeVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +46,8 @@ class ShoppingListDetailsActivity : AppCompatActivity(), ShoppingListDetailsCont
 
     private fun observeData() {
         presenter.shoppingListDetailsLiveData.observe(this, Observer {
+            shouldFABbeVisible = it.details.isActive
+            addFAB.showView(shouldFABbeVisible)
             listItemsAdapter.submitList(it.items)
         })
     }
@@ -67,7 +72,9 @@ class ShoppingListDetailsActivity : AppCompatActivity(), ShoppingListDetailsCont
                 if (dy > 0) {
                     addFAB.hide()
                 } else {
-                    addFAB.show()
+                    if (shouldFABbeVisible) {
+                        addFAB.show()
+                    }
                 }
                 super.onScrolled(recyclerView, dx, dy)
             }
