@@ -1,8 +1,11 @@
 <resources>
-    <string name="app_name">Simple Shopping List</string>
+    <string name="app_name">Shopping Lists</string>
     <string name="enter_text">Enter text</string>
     <string name="cancel">Cancel</string>
     <string name="submit">Submit</string>
     <string name="enter_shopping_list_name">Enter shopping list name</string>
     <string name="creation_date">created %s</string>
+    <string name="archived_lists">Archived shopping lists</string>
+    <string name="active_lists">Shopping lists</string>
+    <string name="shopping_lists_toolbar">Shopping Lists</string>
 </resources>

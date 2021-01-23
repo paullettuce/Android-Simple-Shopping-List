@@ -2,11 +2,12 @@ package pl.paullettuce.simpleshoppinglist.presentation.dialogs
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import kotlinx.android.synthetic.main.dialog_submit_text.*
 import pl.paullettuce.simpleshoppinglist.R
@@ -61,9 +62,10 @@ class SubmitNameDialog @Inject constructor() : DialogFragment() {
 
     private fun onSubmit() {
         val name = getName()
-        if (name.isNotBlank())
+        if (name.isNotBlank()) {
             dismissAllowingStateLoss()
-        submitCallback?.submit(name)
+            submitCallback?.submit(name)
+        }
     }
 
     private fun getName(): String {

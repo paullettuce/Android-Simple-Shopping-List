@@ -7,10 +7,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_shopping_lists.*
 import pl.paullettuce.simpleshoppinglist.R
 import pl.paullettuce.simpleshoppinglist.presentation.dialogs.SubmitNameDialog
+import pl.paullettuce.simpleshoppinglist.presentation.extensions.showView
 import pl.paullettuce.simpleshoppinglist.presentation.lists.RecyclerViewMargin
 import javax.inject.Inject
 
@@ -60,7 +62,7 @@ class ShoppingListsFragment : Fragment(R.layout.fragment_shopping_lists) {
     }
 
     private fun setListeners() {
-        addFAB.setOnClickListener { showSubmitNameDialog() }
+        accessActivityFAB()?.setOnClickListener { showSubmitNameDialog() }
     }
 
     private fun setupRecView() {
@@ -74,11 +76,23 @@ class ShoppingListsFragment : Fragment(R.layout.fragment_shopping_lists) {
                 shoppingListsRecView.scrollToPosition(positionStart)
             }
         })
+        shoppingListsRecView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) {
+                    accessActivityFAB()?.hide()
+                } else {
+                    accessActivityFAB()?.show()
+                }
+                super.onScrolled(recyclerView, dx, dy)
+            }
+        })
     }
 
+    private fun accessActivityFAB(): FloatingActionButton? = activity?.findViewById(R.id.addFAB)
+
     private fun reactToPassedArguments(args: Bundle?) {
-        val shouldFetchActive = shouldFetchActive(args)
-        presenter.setShouldFetchActiveLists(shouldFetchActive)
+        val fetchActive = shouldFetchActive(args)
+        presenter.setFetchActiveLists(fetchActive)
     }
 
     private fun shouldFetchActive(args: Bundle?) =

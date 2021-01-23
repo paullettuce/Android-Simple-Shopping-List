@@ -13,7 +13,7 @@ import pl.paullettuce.simpleshoppinglist.domain.usecase.shopping_lists.GetShoppi
 class ShoppingListsPresenter(
     private val getShoppingListsUseCase: GetShoppingListsUseCase,
     private val createShoppingListUseCase: CreateShoppingListUseCase
-): ShoppingListsContract.Presenter {
+) : ShoppingListsContract.Presenter {
     override val shoppingLists: LiveData<List<ShoppingListDetails>>
         get() = _shouldFetchActiveLists.switchMap {
             getShoppingListsUseCase(it)
@@ -22,7 +22,7 @@ class ShoppingListsPresenter(
     private val _shouldFetchActiveLists = MutableLiveData<Boolean>()
     private val compositeDisposable = CompositeDisposable()
 
-    override fun setShouldFetchActiveLists(shouldFetchActive: Boolean) {
+    override fun setFetchActiveLists(shouldFetchActive: Boolean) {
         _shouldFetchActiveLists.postValue(shouldFetchActive)
     }
 
