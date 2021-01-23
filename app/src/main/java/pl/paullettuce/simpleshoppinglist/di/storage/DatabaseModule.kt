@@ -7,9 +7,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import pl.paullettuce.simpleshoppinglist.storage.dao.ShoppingListItemsDao
 import pl.paullettuce.simpleshoppinglist.storage.dao.ShoppingListsDao
 import pl.paullettuce.simpleshoppinglist.storage.database.AppDatabase
-import pl.paullettuce.simpleshoppinglist.storage.database.AppDatabase_Impl
 import javax.inject.Singleton
 
 @InstallIn(ApplicationComponent::class)
@@ -33,4 +33,10 @@ object DatabaseModule {
     fun provideShoppingListsDao(
         db: AppDatabase
     ): ShoppingListsDao = db.shoppingListsDao()
+
+    @Provides
+    @Singleton
+    fun provideShoppingListItemsDao(
+        db: AppDatabase
+    ): ShoppingListItemsDao = db.shoppingListItemsDao()
 }

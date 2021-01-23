@@ -2,7 +2,6 @@ package pl.paullettuce.simpleshoppinglist.presentation.shopping_lists
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,13 +10,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_shopping_lists.*
 import pl.paullettuce.simpleshoppinglist.R
+import pl.paullettuce.simpleshoppinglist.domain.model.ShoppingListDetails
 import pl.paullettuce.simpleshoppinglist.presentation.dialogs.SubmitNameDialog
-import pl.paullettuce.simpleshoppinglist.presentation.extensions.showView
 import pl.paullettuce.simpleshoppinglist.presentation.lists.RecyclerViewMargin
+import pl.paullettuce.simpleshoppinglist.presentation.shopping_list_details.ShoppingListDetailsActivity
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ShoppingListsFragment : Fragment(R.layout.fragment_shopping_lists) {
+class ShoppingListsFragment : Fragment(R.layout.fragment_shopping_lists),
+    ShoppingListsContract.ListInteraction {
 
     @Inject
     lateinit var presenter: ShoppingListsContract.Presenter
@@ -40,6 +41,18 @@ class ShoppingListsFragment : Fragment(R.layout.fragment_shopping_lists) {
         setListeners()
     }
 
+    override fun archive(item: ShoppingListDetails) {
+        TODO("Not yet implemented")
+    }
+
+    override fun unarchive(item: ShoppingListDetails) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onClick(item: ShoppingListDetails) {
+        openDetailsActivity(item)
+    }
+
     private fun observeData() {
         presenter.shoppingLists.observe(viewLifecycleOwner, Observer {
             shoppingListsAdapter.submitList(it)
@@ -49,10 +62,15 @@ class ShoppingListsFragment : Fragment(R.layout.fragment_shopping_lists) {
 
     private fun showNoItemsInfo(empty: Boolean) {
         if (empty) {
-            Toast.makeText(context, "noitems", Toast.LENGTH_SHORT).show()
+//            show
         } else {
 //            hide
         }
+    }
+
+    private fun openDetailsActivity(item: ShoppingListDetails) {
+        val launchIntent = ShoppingListDetailsActivity.launchIntent(context, item.id)
+        startActivity(launchIntent)
     }
 
     private fun showSubmitNameDialog() {
@@ -71,7 +89,8 @@ class ShoppingListsFragment : Fragment(R.layout.fragment_shopping_lists) {
         shoppingListsRecView.addItemDecoration(
             RecyclerViewMargin(verticalMarginDp = R.dimen.recycler_view_item_margin)
         )
-        shoppingListsAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+        shoppingListsAdapter.registerAdapterDataObserver(object :
+            RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 shoppingListsRecView.scrollToPosition(positionStart)
             }
@@ -100,7 +119,7 @@ class ShoppingListsFragment : Fragment(R.layout.fragment_shopping_lists) {
             ?: throw RuntimeException("No value passed for parameter shouldFetchActive")
 
     companion object {
-        private val SHOULD_FETCH_ACTIVE_BUNDLE_KEY = "SHOULD_FETCH_ACTIVE_BUNDLE_KEY"
+        private const val SHOULD_FETCH_ACTIVE_BUNDLE_KEY = "SHOULD_FETCH_ACTIVE_BUNDLE_KEY"
 
         fun getActiveShoppingListsFragment(): ShoppingListsFragment {
             return shoppingListsFragment(active = true)

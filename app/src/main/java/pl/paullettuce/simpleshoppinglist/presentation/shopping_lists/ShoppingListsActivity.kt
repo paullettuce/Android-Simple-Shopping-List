@@ -1,4 +1,4 @@
-package pl.paullettuce.simpleshoppinglist.presentation
+package pl.paullettuce.simpleshoppinglist.presentation.shopping_lists
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -9,12 +9,10 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.content_main.tabLayout
 import kotlinx.android.synthetic.main.content_main.viewPager
 import pl.paullettuce.simpleshoppinglist.R
 import pl.paullettuce.simpleshoppinglist.presentation.extensions.showView
-import pl.paullettuce.simpleshoppinglist.presentation.shopping_lists.ShoppingListsFragment
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -29,7 +27,10 @@ class ShoppingListsActivity : AppCompatActivity() {
     @Named("archived")
     lateinit var archivedListsFragment: ShoppingListsFragment
 
-    private val viewPagerAdapter = ViewPagerAdapter(this)
+    private val viewPagerAdapter =
+        ViewPagerAdapter(
+            this
+        )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

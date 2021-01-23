@@ -8,4 +8,5 @@
     <string name="archived_lists">Archived shopping lists</string>
     <string name="active_lists">Shopping lists</string>
     <string name="shopping_lists_toolbar">Shopping Lists</string>
+    <string name="list_details_toolbar">Shopping list details</string>
 </resources>

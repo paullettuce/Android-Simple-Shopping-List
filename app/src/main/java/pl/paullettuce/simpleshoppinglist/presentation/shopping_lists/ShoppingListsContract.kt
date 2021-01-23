@@ -13,7 +13,6 @@ interface ShoppingListsContract {
         val shoppingLists: LiveData<List<ShoppingListDetails>>
 
         fun setFetchActiveLists(shouldFetchActive: Boolean)
-        fun saveScrollPosition(position: Int)
         fun createShoppingList(name: String)
     }
 

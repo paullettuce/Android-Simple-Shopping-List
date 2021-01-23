@@ -31,8 +31,4 @@ class ShoppingListsPresenter(
             .subscribe()
             .addTo(compositeDisposable)
     }
-
-    override fun saveScrollPosition(position: Int) {
-        TODO("Not yet implemented")
-    }
 }
