@@ -1,13 +1,15 @@
 package pl.paullettuce.simpleshoppinglist.storage.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "shopping_list_entity")
 data class ShoppingListEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long,
     val name: String,
-    val creationTimestamp: Long,
-    var isArchived: Boolean
-)
+    @ColumnInfo(name= "creation_timestamp") val creationTimestamp: Long,
+    @ColumnInfo(name= "is_active") var isActive: Boolean = true
+) {
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0
+}

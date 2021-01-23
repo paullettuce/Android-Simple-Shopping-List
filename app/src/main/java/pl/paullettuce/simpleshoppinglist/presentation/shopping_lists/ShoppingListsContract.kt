@@ -14,6 +14,7 @@ interface ShoppingListsContract {
 
         fun setShouldFetchActiveLists(shouldFetchActive: Boolean)
         fun saveScrollPosition(position: Int)
+        fun createShoppingList(name: String)
     }
 
     interface ListInteraction {

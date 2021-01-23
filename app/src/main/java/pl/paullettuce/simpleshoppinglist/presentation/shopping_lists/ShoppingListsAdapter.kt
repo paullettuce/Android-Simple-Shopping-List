@@ -4,22 +4,29 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.list_item_shopping_list.view.*
+import pl.paullettuce.simpleshoppinglist.R
 import pl.paullettuce.simpleshoppinglist.domain.model.ShoppingListDetails
 import pl.paullettuce.simpleshoppinglist.domain.model.ShoppingListDetailsDiffCallback
+import pl.paullettuce.simpleshoppinglist.presentation.extensions.inflate
 
 class ShoppingListsAdapter(
     diffCallback: ShoppingListDetailsDiffCallback
 ) : ListAdapter<ShoppingListDetails, ShoppingListViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShoppingListViewHolder {
-        TODO("Not yet implemented")
+        return ShoppingListViewHolder(parent.inflate(R.layout.list_item_shopping_list))
     }
 
     override fun onBindViewHolder(holder: ShoppingListViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.bind(getItem(position))
     }
 }
 
 class ShoppingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+    fun bind(item: ShoppingListDetails) {
+        val subtitle = itemView.context.getString(R.string.creation_date, item.creationDate)
+        itemView.name.text = item.name
+        itemView.subtitle.text = subtitle
+    }
 }

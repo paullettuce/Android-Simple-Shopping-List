@@ -2,6 +2,7 @@ package pl.paullettuce.simpleshoppinglist.presentation.shopping_lists
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,17 +10,21 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_shopping_lists.*
 import pl.paullettuce.simpleshoppinglist.R
+import pl.paullettuce.simpleshoppinglist.presentation.dialogs.SubmitNameDialog
 import pl.paullettuce.simpleshoppinglist.presentation.lists.RecyclerViewMargin
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ShoppingListsFragment private constructor() : Fragment(R.layout.fragment_shopping_lists) {
+class ShoppingListsFragment : Fragment(R.layout.fragment_shopping_lists) {
 
     @Inject
     lateinit var presenter: ShoppingListsContract.Presenter
 
     @Inject
     lateinit var shoppingListsAdapter: ShoppingListsAdapter
+
+    @Inject
+    lateinit var submitNameDialog: SubmitNameDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +35,7 @@ class ShoppingListsFragment private constructor() : Fragment(R.layout.fragment_s
         super.onViewCreated(view, savedInstanceState)
         observeData()
         setupRecView()
+        setListeners()
     }
 
     private fun observeData() {
@@ -40,7 +46,21 @@ class ShoppingListsFragment private constructor() : Fragment(R.layout.fragment_s
     }
 
     private fun showNoItemsInfo(empty: Boolean) {
-        TODO("Not yet implemented")
+        if (empty) {
+            Toast.makeText(context, "noitems", Toast.LENGTH_SHORT).show()
+        } else {
+//            hide
+        }
+    }
+
+    private fun showSubmitNameDialog() {
+        submitNameDialog.titleText = getString(R.string.enter_shopping_list_name)
+        submitNameDialog.setSubmitCallback { name -> presenter.createShoppingList(name) }
+        submitNameDialog.show(childFragmentManager, "enter_shopping_list_name")
+    }
+
+    private fun setListeners() {
+        addFAB.setOnClickListener { showSubmitNameDialog() }
     }
 
     private fun setupRecView() {

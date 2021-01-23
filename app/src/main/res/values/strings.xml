@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Simple Shopping List</string>
+    <string name="enter_text">Enter text</string>
+    <string name="cancel">Cancel</string>
+    <string name="submit">Submit</string>
+    <string name="enter_shopping_list_name">Enter shopping list name</string>
+    <string name="creation_date">created %s</string>
 </resources>

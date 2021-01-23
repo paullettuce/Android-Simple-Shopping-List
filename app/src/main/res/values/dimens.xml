@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="text_size_title">16sp</dimen>
+    <dimen name="text_size_subtitle">12sp</dimen>
+
+    <dimen name="corner_rounding">10dp</dimen>
+
     <dimen name="recycler_view_item_margin">1dp</dimen>
+    <dimen name="medium_space">10dp</dimen>
+    <dimen name="small_space">5dp</dimen>
+    <dimen name="big_space">20dp</dimen>
+
+    <dimen name="fab_margin">32dp</dimen>
+
+    <dimen name="list_item_icon_size">25dp</dimen>
+    <dimen name="list_item_height">65dp</dimen>
 </resources>

@@ -15,13 +15,13 @@ class ShoppingListDetailsDiffCallback: DiffUtil.ItemCallback<ShoppingListDetails
         oldItem: ShoppingListDetails,
         newItem: ShoppingListDetails
     ): Boolean {
-        TODO("Not yet implemented")
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(
         oldItem: ShoppingListDetails,
         newItem: ShoppingListDetails
     ): Boolean {
-        TODO("Not yet implemented")
+        return oldItem == newItem
     }
 }
