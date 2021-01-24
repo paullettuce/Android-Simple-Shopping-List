@@ -41,7 +41,7 @@ class NameAndQuantityDialog : DialogFragment() {
         cancelButton.setOnClickListener { dismissAllowingStateLoss() }
         submitButton.setOnClickListener { onSubmit() }
 
-//        quantityEditText.setValueRange(1, 999)
+        quantityEditText.setValueRange(1, 999)
         increaseButton.setOnClickListener { quantityEditText.setValue(quantityEditText.getValue() + 1) }
         decreaseButton.setOnClickListener { quantityEditText.setValue(quantityEditText.getValue() - 1) }
 
