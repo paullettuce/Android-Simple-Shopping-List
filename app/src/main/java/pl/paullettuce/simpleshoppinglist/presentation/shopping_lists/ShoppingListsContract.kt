@@ -21,4 +21,8 @@ interface ShoppingListsContract {
         fun archive(item: ShoppingListDetails)
         fun onClick(item: ShoppingListDetails)
     }
+
+    interface FABInteraction {
+        fun onAddFABClick()
+    }
 }

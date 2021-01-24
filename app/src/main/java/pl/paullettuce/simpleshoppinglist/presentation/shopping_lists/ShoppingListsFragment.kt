@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ShoppingListsFragment : Fragment(R.layout.fragment_shopping_lists),
-    ShoppingListsContract.ListInteraction {
+    ShoppingListsContract.ListInteraction, ShoppingListsContract.FABInteraction {
 
     @Inject
     lateinit var presenter: ShoppingListsContract.Presenter
@@ -36,7 +36,6 @@ class ShoppingListsFragment : Fragment(R.layout.fragment_shopping_lists),
         super.onViewCreated(view, savedInstanceState)
         observeData()
         setupRecView()
-        setListeners()
     }
 
     override fun archive(item: ShoppingListDetails) {
@@ -47,19 +46,14 @@ class ShoppingListsFragment : Fragment(R.layout.fragment_shopping_lists),
         openDetailsActivity(item)
     }
 
+    override fun onAddFABClick() {
+        showSubmitNameDialog()
+    }
+
     private fun observeData() {
         presenter.shoppingLists.observe(viewLifecycleOwner, Observer {
             shoppingListsAdapter.submitList(it)
-            showNoItemsInfo(it.isEmpty())
         })
-    }
-
-    private fun showNoItemsInfo(empty: Boolean) {
-        if (empty) {
-//            show
-        } else {
-//            hide
-        }
     }
 
     private fun openDetailsActivity(item: ShoppingListDetails) {
@@ -74,10 +68,6 @@ class ShoppingListsFragment : Fragment(R.layout.fragment_shopping_lists),
         }
     }
 
-    private fun setListeners() {
-        accessActivityFAB()?.setOnClickListener { showSubmitNameDialog() }
-    }
-
     private fun setupRecView() {
         shoppingListsRecView.layoutManager = LinearLayoutManager(this.context)
         shoppingListsRecView.adapter = shoppingListsAdapter
@@ -90,23 +80,7 @@ class ShoppingListsFragment : Fragment(R.layout.fragment_shopping_lists),
                 shoppingListsRecView.scrollToPosition(positionStart)
             }
         })
-        shoppingListsRecView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                showFAB(dy <= 0)
-            }
-        })
     }
-
-    private fun showFAB(show: Boolean) {
-        if (show) {
-            accessActivityFAB()?.show()
-        } else {
-            accessActivityFAB()?.hide()
-        }
-    }
-
-    private fun accessActivityFAB(): FloatingActionButton? = activity?.findViewById(R.id.addFAB)
 
     private fun reactToPassedArguments(args: Bundle?) {
         val fetchActive = shouldFetchActive(args)
