@@ -6,6 +6,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_shopping_list_item.view.*
+import pl.paullettuce.SwipeLayout
 import pl.paullettuce.simpleshoppinglist.R
 import pl.paullettuce.simpleshoppinglist.presentation.diff_callbacks.ShoppingListItemDiffCallback
 import pl.paullettuce.simpleshoppinglist.presentation.extensions.inflate
@@ -49,6 +50,15 @@ class ShoppingListItemViewHolder(
                     interaction.markAsDone(item)
                 }
             }
+        }
+        itemView.swipeLayout.reset()
+        itemView.swipeLayout.blockSwipes(!item.isListActive)
+        itemView.swipeLayout.swipeListener = object : SwipeLayout.SwipeListener {
+            override fun swipedToLeft() {
+                interaction.delete(item)
+            }
+
+            override fun swipedToRight() {}
         }
     }
 

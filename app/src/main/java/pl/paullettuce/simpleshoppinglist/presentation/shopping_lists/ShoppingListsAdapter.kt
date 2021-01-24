@@ -5,6 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_shopping_list_details.view.*
+import kotlinx.android.synthetic.main.list_item_shopping_list_details.view.name
+import kotlinx.android.synthetic.main.list_item_shopping_list_details.view.subtitle
+import pl.paullettuce.SwipeLayout
 import pl.paullettuce.simpleshoppinglist.R
 import pl.paullettuce.simpleshoppinglist.domain.model.ShoppingListDetails
 import pl.paullettuce.simpleshoppinglist.presentation.diff_callbacks.ShoppingListDetailsDiffCallback
@@ -35,10 +38,14 @@ class ShoppingListViewHolder(
         val subtitle = itemView.context.getString(R.string.creation_date, item.creationDate)
         itemView.name.text = item.name
         itemView.subtitle.text = subtitle
-        itemView.setOnClickListener { interaction.onClick(item) }
-        itemView.setOnLongClickListener {
-            interaction.archive(item)
-            true
+        itemView.mainView.setOnClickListener { interaction.onClick(item) }
+        itemView.swipeLayout.reset()
+        itemView.swipeLayout.blockSwipes(!item.isActive)
+        itemView.swipeLayout.swipeListener = object : SwipeLayout.SwipeListener {
+            override fun swipedToLeft() { }
+            override fun swipedToRight() {
+                interaction.archive(item)
+            }
         }
     }
 }

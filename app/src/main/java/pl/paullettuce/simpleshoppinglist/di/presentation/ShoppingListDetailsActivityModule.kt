@@ -5,10 +5,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
-import pl.paullettuce.simpleshoppinglist.domain.usecase.details.AddShoppingListItemUseCase
-import pl.paullettuce.simpleshoppinglist.domain.usecase.details.GetShoppingListDetailsUseCase
-import pl.paullettuce.simpleshoppinglist.domain.usecase.details.MarkAsDoneUseCase
-import pl.paullettuce.simpleshoppinglist.domain.usecase.details.UnmarkAsDoneUseCase
+import pl.paullettuce.simpleshoppinglist.domain.usecase.details.*
 import pl.paullettuce.simpleshoppinglist.presentation.diff_callbacks.ShoppingListItemDiffCallback
 import pl.paullettuce.simpleshoppinglist.presentation.shopping_list_details.ShoppingListDetailsActivity
 import pl.paullettuce.simpleshoppinglist.presentation.shopping_list_details.ShoppingListDetailsContract
@@ -24,13 +21,15 @@ object ShoppingListDetailsActivityModule {
         getShoppingListDetailsUseCase: GetShoppingListDetailsUseCase,
         addShoppingListItemUseCase: AddShoppingListItemUseCase,
         markAsDoneUseCase: MarkAsDoneUseCase,
-        unmarkAsDoneUseCase: UnmarkAsDoneUseCase
+        unmarkAsDoneUseCase: UnmarkAsDoneUseCase,
+        deleteListItemUseCase: DeleteListItemUseCase
     ): ShoppingListDetailsContract.Presenter {
         return ShoppingListDetailsPresenter(
             getShoppingListDetailsUseCase,
             addShoppingListItemUseCase,
             markAsDoneUseCase,
-            unmarkAsDoneUseCase
+            unmarkAsDoneUseCase,
+            deleteListItemUseCase
         )
     }
 

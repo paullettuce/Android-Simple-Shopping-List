@@ -34,4 +34,10 @@ class ShoppingListItemsRepositoryImpl(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
+
+    override fun delete(item: ShoppingListItemEntity): Completable {
+        return shoppingListItemsDao.delete(item)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
 }

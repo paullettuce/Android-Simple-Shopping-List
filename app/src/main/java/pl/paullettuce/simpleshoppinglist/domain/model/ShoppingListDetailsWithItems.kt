@@ -11,5 +11,9 @@ data class ShoppingListDetailsWithItems(
         parentColumn = "id",
         entityColumn = "shopping_list_id"
     )
-    val items: List<ShoppingListItemEntity>
-)
+    var items: List<ShoppingListItemEntity>
+) {
+    init {
+        items = items.sortedByDescending { it.creationTimestamp }
+    }
+}

@@ -7,17 +7,15 @@ import io.reactivex.rxjava3.kotlin.addTo
 import pl.paullettuce.simpleshoppinglist.domain.extensions.switchMap
 import pl.paullettuce.simpleshoppinglist.domain.model.ShoppingListDetails
 import pl.paullettuce.simpleshoppinglist.domain.model.ShoppingListDetailsWithItems
-import pl.paullettuce.simpleshoppinglist.domain.usecase.details.AddShoppingListItemUseCase
-import pl.paullettuce.simpleshoppinglist.domain.usecase.details.GetShoppingListDetailsUseCase
-import pl.paullettuce.simpleshoppinglist.domain.usecase.details.MarkAsDoneUseCase
-import pl.paullettuce.simpleshoppinglist.domain.usecase.details.UnmarkAsDoneUseCase
+import pl.paullettuce.simpleshoppinglist.domain.usecase.details.*
 import pl.paullettuce.simpleshoppinglist.storage.entity.ShoppingListItemEntity
 
 class ShoppingListDetailsPresenter(
     private val getShoppingListDetailsUseCase: GetShoppingListDetailsUseCase,
     private val addShoppingListItemUseCase: AddShoppingListItemUseCase,
     private val markAsDoneUseCase: MarkAsDoneUseCase,
-    private val unmarkAsDoneUseCase: UnmarkAsDoneUseCase
+    private val unmarkAsDoneUseCase: UnmarkAsDoneUseCase,
+    private val deleteListItemUseCase: DeleteListItemUseCase
 ) : ShoppingListDetailsContract.Presenter {
 
     override val shoppingListDetailsLiveData: LiveData<ShoppingListDetailsWithItems>
@@ -48,6 +46,12 @@ class ShoppingListDetailsPresenter(
 
     override fun unmarkAsDone(listItemEntity: ShoppingListItemEntity) {
         unmarkAsDoneUseCase(listItemEntity.id)
+            .subscribe()
+            .addTo(compositeDisposable)
+    }
+
+    override fun delete(item: ShoppingListItemEntity) {
+        deleteListItemUseCase(item)
             .subscribe()
             .addTo(compositeDisposable)
     }

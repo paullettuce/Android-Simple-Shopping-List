@@ -1,6 +1,7 @@
 package pl.paullettuce.simpleshoppinglist.storage.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
@@ -18,4 +19,7 @@ interface ShoppingListItemsDao {
 
     @Query("UPDATE shopping_list_item_entity SET isDone=0 WHERE id=:id")
     fun unmarkAsDone(id: Long): Completable
+
+    @Delete
+    fun delete(item: ShoppingListItemEntity): Completable
 }

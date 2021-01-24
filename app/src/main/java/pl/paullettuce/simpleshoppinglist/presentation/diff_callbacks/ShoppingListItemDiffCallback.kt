@@ -15,6 +15,6 @@ class ShoppingListItemDiffCallback: DiffUtil.ItemCallback<ShoppingListItemEntity
         oldItem: ShoppingListItemEntity,
         newItem: ShoppingListItemEntity
     ): Boolean {
-        return oldItem == newItem
+        return oldItem.isDone == newItem.isDone
     }
 }

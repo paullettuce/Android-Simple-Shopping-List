@@ -45,6 +45,10 @@ class ShoppingListDetailsActivity : AppCompatActivity(), ShoppingListDetailsCont
         presenter.unmarkAsDone(listItemEntity)
     }
 
+    override fun delete(item: ShoppingListItemEntity) {
+        presenter.delete(item)
+    }
+
     private fun observeData() {
         presenter.shoppingListDetailsLiveData.observe(this, Observer {
             shouldFABbeVisible = it.details.isActive

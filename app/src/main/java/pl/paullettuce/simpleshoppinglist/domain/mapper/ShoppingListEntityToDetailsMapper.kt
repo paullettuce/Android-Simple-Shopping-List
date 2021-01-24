@@ -9,7 +9,8 @@ class ShoppingListEntityToDetailsMapper : Mapper<ShoppingListEntity, ShoppingLis
         return ShoppingListDetails(
             input.id,
             input.name,
-            TimeFormatter.friendlyFromMillis(input.creationTimestamp)
+            TimeFormatter.friendlyFromMillis(input.creationTimestamp),
+            input.isActive
         )
     }
 }

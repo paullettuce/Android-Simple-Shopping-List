@@ -51,4 +51,9 @@ object UseCasesModule {
     fun provideArchiveListUseCase(
         repository: ShoppingListsRepository
     ): ArchiveListUseCase = ArchiveListUseCaseImpl(repository)
+
+    @Provides
+    fun provideDeleteListItemUseCase(
+        repository: ShoppingListItemsRepository
+    ): DeleteListItemUseCase = DeleteListItemUseCaseImpl(repository)
 }

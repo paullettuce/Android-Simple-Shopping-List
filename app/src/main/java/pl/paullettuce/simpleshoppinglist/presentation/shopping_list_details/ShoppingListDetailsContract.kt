@@ -17,10 +17,12 @@ interface ShoppingListDetailsContract {
         fun addShoppingListItem(name: String, quantity: Int)
         fun markAsDone(listItemEntity: ShoppingListItemEntity)
         fun unmarkAsDone(listItemEntity: ShoppingListItemEntity)
+        fun delete(item: ShoppingListItemEntity)
     }
 
     interface ListInteraction {
         fun markAsDone(listItemEntity: ShoppingListItemEntity)
         fun unmarkAsDone(listItemEntity: ShoppingListItemEntity)
+        fun delete(item: ShoppingListItemEntity)
     }
 }

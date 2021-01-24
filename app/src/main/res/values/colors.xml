@@ -7,4 +7,6 @@
     <color name="light_grey">#E6E6E6</color>
     <color name="text_color">#353535</color>
     <color name="separator">#CBCBCB</color>
+    <color name="bg_delete">#A70B00</color>
+    <color name="bg_archive">#009DBD</color>
 </resources>
