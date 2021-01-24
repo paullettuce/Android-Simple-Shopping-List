@@ -30,7 +30,6 @@
         android:layout_marginTop="@dimen/medium_space"
         android:background="@color/light_grey"
         android:imeOptions="actionDone"
-        android:inputType="number"
         android:maxLines="1"
         android:padding="@dimen/medium_space"
         app:layout_constraintEnd_toEndOf="parent"

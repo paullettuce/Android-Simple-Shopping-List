@@ -2,11 +2,19 @@ package pl.paullettuce.simpleshoppinglist.presentation.dialogs
 
 import android.content.Context
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
 
 
 class MinMaxEditText : androidx.appcompat.widget.AppCompatEditText {
+    private val DEFAULT_MIN = 0
+    private val DEFAULT_MAX = Int.MAX_VALUE
+
+    init {
+        inputType = InputType.TYPE_CLASS_NUMBER
+    }
+
     interface OnChange {
         fun onValueChange(number: Int)
     }
@@ -46,18 +54,23 @@ class MinMaxEditText : androidx.appcompat.widget.AppCompatEditText {
 
     private var oldValue: Int = 0
 
-    var min: Int = Int.MIN_VALUE
+    var min: Int = DEFAULT_MIN
         private set(value) {
             field = value
             capValueIfLowerThanMin()
         }
 
-    var max: Int = Int.MAX_VALUE
+    var max: Int = DEFAULT_MAX
         private set(value) {
             field = value
             capValueIfHigherThanMax()
         }
     var onChangeCallback: OnChange? = null
+
+    override fun onFinishInflate() {
+        super.onFinishInflate()
+        setValueRange(min, max)
+    }
 
     fun setValueRange(min: Int, max: Int) {
         this.min = min
@@ -99,6 +112,9 @@ class MinMaxEditText : androidx.appcompat.widget.AppCompatEditText {
         }
     }
 
+    @Throws(NumberFormatException::class)
+    private fun parseTextField() = text.toString().toInt()
+
     private fun insertMinIfEmpty() {
         if (text.isNullOrEmpty())
             setNumber(min)
@@ -115,8 +131,5 @@ class MinMaxEditText : androidx.appcompat.widget.AppCompatEditText {
             onChangeCallback?.onValueChange(newValue)
         }
     }
-
-    @Throws(NumberFormatException::class)
-    private fun parseTextField() = text.toString().toInt()
 
 }
