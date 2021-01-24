@@ -19,4 +19,5 @@
     <dimen name="list_item_height">65dp</dimen>
     <dimen name="toolbar_height">60dp</dimen>
     <dimen name="big_icon_size">35dp</dimen>
+    <dimen name="dialog_enter_name_min_width">350dp</dimen>
 </resources>

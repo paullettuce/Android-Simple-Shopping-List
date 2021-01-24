@@ -8,10 +8,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_list_details.*
 import kotlinx.android.synthetic.main.fragment_shopping_lists.*
 import pl.paullettuce.simpleshoppinglist.R
 import pl.paullettuce.simpleshoppinglist.domain.model.ShoppingListDetails
-import pl.paullettuce.simpleshoppinglist.presentation.dialogs.SubmitNameDialog
+import pl.paullettuce.simpleshoppinglist.presentation.dialogs.NameDialog
 import pl.paullettuce.simpleshoppinglist.presentation.lists.RecyclerViewMargin
 import pl.paullettuce.simpleshoppinglist.presentation.shopping_list_details.ShoppingListDetailsActivity
 import javax.inject.Inject
@@ -25,9 +26,6 @@ class ShoppingListsFragment : Fragment(R.layout.fragment_shopping_lists),
 
     @Inject
     lateinit var shoppingListsAdapter: ShoppingListsAdapter
-
-    @Inject
-    lateinit var submitNameDialog: SubmitNameDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +41,6 @@ class ShoppingListsFragment : Fragment(R.layout.fragment_shopping_lists),
 
     override fun archive(item: ShoppingListDetails) {
         presenter.archiveList(item)
-    }
-
-    override fun unarchive(item: ShoppingListDetails) {
-        TODO("Not yet implemented")
     }
 
     override fun onClick(item: ShoppingListDetails) {
@@ -74,9 +68,10 @@ class ShoppingListsFragment : Fragment(R.layout.fragment_shopping_lists),
     }
 
     private fun showSubmitNameDialog() {
-        submitNameDialog.titleText = getString(R.string.enter_shopping_list_name)
-        submitNameDialog.setSubmitCallback { name -> presenter.createShoppingList(name) }
-        submitNameDialog.show(childFragmentManager, "enter_shopping_list_name")
+        NameDialog().apply {
+            setSubmitCallback { name -> presenter.createShoppingList(name) }
+            show(this@ShoppingListsFragment.childFragmentManager, "NameDialog")
+        }
     }
 
     private fun setListeners() {
@@ -97,14 +92,18 @@ class ShoppingListsFragment : Fragment(R.layout.fragment_shopping_lists),
         })
         shoppingListsRecView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0) {
-                    accessActivityFAB()?.hide()
-                } else {
-                    accessActivityFAB()?.show()
-                }
                 super.onScrolled(recyclerView, dx, dy)
+                showFAB(dy <= 0)
             }
         })
+    }
+
+    private fun showFAB(show: Boolean) {
+        if (show) {
+            accessActivityFAB()?.show()
+        } else {
+            accessActivityFAB()?.hide()
+        }
     }
 
     private fun accessActivityFAB(): FloatingActionButton? = activity?.findViewById(R.id.addFAB)

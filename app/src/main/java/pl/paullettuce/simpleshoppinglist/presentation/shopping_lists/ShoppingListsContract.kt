@@ -19,7 +19,6 @@ interface ShoppingListsContract {
 
     interface ListInteraction {
         fun archive(item: ShoppingListDetails)
-        fun unarchive(item: ShoppingListDetails)
         fun onClick(item: ShoppingListDetails)
     }
 }

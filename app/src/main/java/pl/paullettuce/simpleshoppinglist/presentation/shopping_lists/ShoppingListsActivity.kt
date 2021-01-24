@@ -19,19 +19,6 @@ import javax.inject.Named
 @AndroidEntryPoint
 class ShoppingListsActivity : AppCompatActivity() {
 
-    @Inject
-    @Named("active")
-    lateinit var activeListsFragment: ShoppingListsFragment
-
-    @Inject
-    @Named("archived")
-    lateinit var archivedListsFragment: ShoppingListsFragment
-
-    private val viewPagerAdapter =
-        ViewPagerAdapter(
-            this
-        )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -40,9 +27,7 @@ class ShoppingListsActivity : AppCompatActivity() {
     }
 
     private fun setupViewPager() {
-        viewPagerAdapter.addFragment(activeListsFragment, 0)
-        viewPagerAdapter.addFragment(archivedListsFragment, 1)
-        viewPager.adapter = viewPagerAdapter
+        viewPager.adapter = ShoppingListsViewPagerAdapter(this)
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = getTabTitle(position)
@@ -65,18 +50,17 @@ class ShoppingListsActivity : AppCompatActivity() {
     }
 }
 
-class ViewPagerAdapter(
+class ShoppingListsViewPagerAdapter(
     fragmentActivity: FragmentActivity
 ) : FragmentStateAdapter(fragmentActivity) {
-    private val fragments = mutableMapOf<Int, Fragment>()
 
-    override fun getItemCount() = fragments.size
+    override fun getItemCount() = 2
 
     override fun createFragment(position: Int): Fragment {
-        return fragments[position]!!
-    }
-
-    fun addFragment(fragment: Fragment, position: Int) {
-        fragments[position] = fragment
+        return if (position == 0) {
+            ShoppingListsFragment.getActiveShoppingListsFragment()
+        } else {
+            ShoppingListsFragment.getArchivedShoppingListsFragment()
+        }
     }
 }

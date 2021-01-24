@@ -6,21 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.annotation.ColorRes
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import kotlinx.android.synthetic.main.dialog_submit_text.*
 import pl.paullettuce.simpleshoppinglist.R
-import javax.inject.Inject
+import pl.paullettuce.simpleshoppinglist.presentation.extensions.setMatchParentWidth
 
-interface SubmitCallback {
+interface NameDialogCallback {
     fun submit(name: String)
 }
 
-class SubmitNameDialog @Inject constructor() : DialogFragment() {
+class NameDialog : DialogFragment() {
+    private var nameDialogCallback: NameDialogCallback? = null
 
-    var titleText: String = ""
-    private var submitCallback: SubmitCallback? = null
+    override fun onStart() {
+        super.onStart()
+        setMatchParentWidth()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +34,6 @@ class SubmitNameDialog @Inject constructor() : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (titleText.isNotBlank()) editText.hint = titleText
         cancelButton.setOnClickListener { dismissAllowingStateLoss() }
 
         submitButton.setOnClickListener {
@@ -55,7 +55,7 @@ class SubmitNameDialog @Inject constructor() : DialogFragment() {
     }
 
     fun setSubmitCallback(func: (String) -> Unit) {
-        submitCallback = object : SubmitCallback {
+        nameDialogCallback = object : NameDialogCallback {
             override fun submit(name: String) = func(name)
         }
     }
@@ -64,7 +64,7 @@ class SubmitNameDialog @Inject constructor() : DialogFragment() {
         val name = getName()
         if (name.isNotBlank()) {
             dismissAllowingStateLoss()
-            submitCallback?.submit(name)
+            nameDialogCallback?.submit(name)
         }
     }
 
