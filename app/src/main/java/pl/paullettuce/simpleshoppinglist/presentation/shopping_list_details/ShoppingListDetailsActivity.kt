@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_list_details.*
+import kotlinx.android.synthetic.main.fragment_shopping_lists.*
 import pl.paullettuce.simpleshoppinglist.R
 import pl.paullettuce.simpleshoppinglist.presentation.dialogs.NameAndQuantityDialog
 import pl.paullettuce.simpleshoppinglist.presentation.extensions.showView
@@ -83,6 +84,12 @@ class ShoppingListDetailsActivity : AppCompatActivity(), ShoppingListDetailsCont
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 showFAB(dy <= 0 && shouldFABbeVisible)
+            }
+        })
+        listItemsAdapter.registerAdapterDataObserver(object :
+            RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                listItemsRecView.scrollToPosition(positionStart)
             }
         })
     }
